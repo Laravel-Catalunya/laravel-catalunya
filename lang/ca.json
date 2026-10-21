@@ -92,5 +92,10 @@
     "Back to Companies": "Tornar a empreses",
     "Visit Website": "Visitar lloc web",
     "Does your company use Laravel? We want to showcase it!": "La teva empresa utilitza Laravel? Volem mostrar-la!",
-    "Send us an email with your company info to be added to this list.": "Envia'ns un correu amb la informació de la teva empresa per ser afegida a aquesta llista."
+    "Send us an email with your company info to be added to this list.": "Envia'ns un correu amb la informació de la teva empresa per ser afegida a aquesta llista.",
+    "Maintenance": "Manteniment",
+    "We are not down, we are just tuning things up.": "No hem caigut, només estem posant-ho tot a punt.",
+    "We are doing some maintenance to keep everything running smoothly. This page checks back on its own.": "Estem fent tasques de manteniment perquè tot funcioni com cal. Aquesta pàgina es torna a comprovar sola.",
+    "Try again": "Torna-ho a provar",
+    "Retrying in": "Reintentant en"
 }
