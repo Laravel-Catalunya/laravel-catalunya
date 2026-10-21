@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ca">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <meta name="robots" content="noindex">
+        <meta name="theme-color" content="#f6f7f8" media="(prefers-color-scheme: light)">
+        <meta name="theme-color" content="#111112" media="(prefers-color-scheme: dark)">
+        <title>Manteniment - Laravel Catalunya</title>
+        <link rel="icon" href="/favicon.ico" sizes="any">
+        <style>
+            :root {
+                --background: #f6f7f8;
+                --foreground: #121417;
+                --muted-foreground: #5b616b;
+                --primary: #3b6fe0;
+                --primary-hover: #2e5ccb;
+                --primary-foreground: #ffffff;
+                --rail: #d3d7dd;
+                --accent: #d9480f;
+                --card: #ffffff;
+                color-scheme: light;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --background: #111112;
+                    --foreground: #ececec;
+                    --muted-foreground: #9a9ca3;
+                    --primary: #6b93ec;
+                    --primary-hover: #5a84e3;
+                    --primary-foreground: #0b0b0c;
+                    --rail: #2b2c30;
+                    --accent: #ff8a4c;
+                    --card: #18181a;
+                    color-scheme: dark;
+                }
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                background: var(--background);
+            }
+
+            body {
+                margin: 0;
+                padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
+                font-family: ui-sans-serif, system-ui, sans-serif;
+                color: var(--foreground);
+                -webkit-font-smoothing: antialiased;
+            }
+
+            main {
+                display: flex;
+                align-items: center;
+                min-height: 100svh;
+                max-width: 48rem;
+                margin: 0 auto;
+                padding: 4rem 1rem;
+            }
+
+            ol {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            li {
+                display: flex;
+            }
+
+            li + li .content {
+                padding-top: 3rem;
+            }
+
+            .rail {
+                position: relative;
+                flex-shrink: 0;
+                width: 2.5rem;
+            }
+
+            .rail-line {
+                position: absolute;
+                top: 0.875rem;
+                bottom: 0;
+                left: 50%;
+                width: 2px;
+                transform: translateX(-50%);
+                background: var(--rail);
+            }
+
+            li:last-child .rail-line {
+                bottom: 1.5rem;
+                mask-image: linear-gradient(to bottom, black 40%, transparent);
+                -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent);
+            }
+
+            .rail-head,
+            .rail-node {
+                position: absolute;
+                left: 50%;
+                width: 0.875rem;
+                height: 0.875rem;
+                transform: translate(-50%, -50%);
+                border-radius: 9999px;
+            }
+
+            .rail-head {
+                top: 0.875rem;
+                border: 3px solid var(--background);
+                background: var(--rail);
+                box-shadow: 0 0 0 2px var(--rail);
+            }
+
+            .rail-node {
+                border: 2px solid var(--muted-foreground);
+                background: var(--background);
+            }
+
+            li + li .rail-node {
+                top: 3.625rem;
+            }
+
+            .rail-node.accent {
+                border-color: var(--accent);
+            }
+
+            .logo {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding-bottom: 3.5rem;
+                font-size: 1.25rem;
+                font-weight: 600;
+                letter-spacing: -0.025em;
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .logo .accent {
+                color: var(--accent);
+            }
+
+            .content {
+                min-width: 0;
+                flex: 1;
+            }
+
+            .mono,
+            .command,
+            .countdown {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            }
+
+            .command {
+                margin: 0;
+                font-size: 13px;
+                overflow-wrap: anywhere;
+                color: var(--muted-foreground);
+            }
+
+            h1 {
+                margin: 1rem 0 0;
+                font-size: clamp(1.75rem, 4vw, 2.5rem);
+                font-weight: 600;
+                line-height: 1.2;
+                letter-spacing: -0.025em;
+                text-wrap: balance;
+            }
+
+            h2 {
+                margin: 0.75rem 0 0;
+                font-size: 1.25rem;
+                font-weight: 600;
+                letter-spacing: -0.015em;
+            }
+
+            p.description {
+                max-width: 52ch;
+                margin: 0.75rem 0 0;
+                font-size: 1.125rem;
+                line-height: 1.6;
+                text-wrap: pretty;
+                color: var(--muted-foreground);
+            }
+
+            dl {
+                display: grid;
+                grid-template-columns: max-content 1fr;
+                gap: 0.5rem 1.25rem;
+                margin: 1.25rem 0 0;
+                padding: 1rem 1.25rem;
+                border: 1px solid var(--rail);
+                border-radius: 0.5rem;
+                background: var(--card);
+                font-size: 0.9375rem;
+                line-height: 1.5;
+            }
+
+            dt {
+                color: var(--muted-foreground);
+            }
+
+            dd {
+                margin: 0;
+                overflow-wrap: anywhere;
+            }
+
+            .badge {
+                display: inline-block;
+                padding: 0 0.5rem;
+                border-radius: 9999px;
+                font-size: 0.8125rem;
+                font-weight: 600;
+                color: var(--primary-foreground);
+                background: var(--accent);
+            }
+
+            ul.steps {
+                margin: 1rem 0 0;
+                padding-left: 1.25rem;
+                font-size: 1rem;
+                line-height: 1.7;
+                color: var(--muted-foreground);
+            }
+
+            ul.steps strong {
+                color: var(--foreground);
+                font-weight: 500;
+            }
+
+            a {
+                color: var(--primary);
+            }
+
+            a:hover {
+                color: var(--primary-hover);
+            }
+
+            .actions {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0.75rem 1.25rem;
+                margin-top: 2rem;
+            }
+
+            button {
+                display: inline-flex;
+                align-items: center;
+                height: 2.75rem;
+                padding: 0 1.5rem;
+                border: 0;
+                border-radius: 0.5rem;
+                font: inherit;
+                font-size: 0.9375rem;
+                font-weight: 500;
+                color: var(--primary-foreground);
+                background: var(--primary);
+                cursor: pointer;
+            }
+
+            button:hover {
+                background: var(--primary-hover);
+            }
+
+            button:focus-visible {
+                outline: 2px solid var(--primary);
+                outline-offset: 2px;
+            }
+
+            .countdown {
+                margin: 0;
+                font-size: 13px;
+                font-variant-numeric: tabular-nums;
+                color: var(--muted-foreground);
+            }
+
+            .countdown span {
+                display: inline-block;
+                min-width: 2ch;
+                text-align: right;
+            }
+
+            @media (max-width: 480px) {
+                dl {
+                    grid-template-columns: 1fr;
+                    gap: 0.125rem;
+                }
+
+                dd + dt {
+                    margin-top: 0.5rem;
+                }
+            }
+
+            @media (min-width: 640px) {
+                main {
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+                }
+
+                .rail {
+                    width: 4rem;
+                }
+
+                .logo {
+                    padding-bottom: 4rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <ol>
+                <li>
+                    <div class="rail" aria-hidden="true">
+                        <span class="rail-line"></span>
+                        <span class="rail-head"></span>
+                    </div>
+                    <div class="content">
+                        <a class="logo" href="/" aria-label="Laravel Catalunya, anar a l'inici">
+                            <span>Laravel <span class="accent">Catalunya</span></span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="rail" aria-hidden="true">
+                        <span class="rail-line"></span>
+                        <span class="rail-node accent" style="top: 0.625rem"></span>
+                    </div>
+                    <div class="content" style="padding-top: 0">
+                        <p class="command">patch: aplicant l'actualització de seguretat de PHP per a CVE-2026-109618, CVE-2026-109619</p>
+                        <h1>No hem caigut: ens assegurem que l'únic codi remot que s'executa aquí és el nostre.</h1>
+                        <p class="description">S'han fet públiques dues vulnerabilitats crítiques al nucli de PHP i estem actualitzant els servidors abans que algú s'hi posi creatiu. Tornem de seguida.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="rail" aria-hidden="true">
+                        <span class="rail-line"></span>
+                        <span class="rail-node"></span>
+                    </div>
+                    <div class="content">
+                        <p class="command">cat /var/log/incident.log</p>
+                        <h2>Què ha passat?</h2>
+                        <p class="description">El 20 d'octubre de 2026 es van filtrar, abans de la divulgació coordinada, els detalls de dues vulnerabilitats d'execució remota de codi (RCE) a PHP, batejades com a <em>PHP2Shell</em>. Afecten la manera com PHP processa les peticions <span class="mono">multipart/form-data</span>, abans que s'executi cap codi de l'aplicació.</p>
+                        <dl>
+                            <dt>CVE</dt>
+                            <dd class="mono">CVE-2026-109618, CVE-2026-109619</dd>
+                            <dt>Gravetat</dt>
+                            <dd><span class="badge">Crítica</span> CVSS v4.0 9.2</dd>
+                            <dt>Versions afectades</dt>
+                            <dd>PHP 5.4 i posteriors (segons els primers informes)</dd>
+                            <dt>Solució</dt>
+                            <dd>Versió de seguretat de PHP del 21/10/2026 a les 14:00 UTC (només branques suportades, 8.2+)</dd>
+                        </dl>
+                    </div>
+                </li>
+                <li>
+                    <div class="rail" aria-hidden="true">
+                        <span class="rail-line"></span>
+                        <span class="rail-node"></span>
+                    </div>
+                    <div class="content">
+                        <p class="command">./mitigate.sh --now</p>
+                        <h2>Què estem fent?</h2>
+                        <ul class="steps">
+                            <li style="display: list-item"><strong>Hem aturat PHP</strong> i servim aquesta pàgina estàtica: el mode de manteniment de Laravel no protegeix, perquè PHP continua processant cada petició.</li>
+                            <li style="display: list-item"><strong>Actualitzarem PHP</strong> a la versió corregida tan bon punt es publiqui.</li>
+                            <li style="display: list-item"><strong>Revisarem els registres</strong> per descartar qualsevol accés no autoritzat abans de tornar a obrir.</li>
+                        </ul>
+                        <p class="description">Si tens un projecte amb PHP, actualitza'l tan aviat com puguis. Més informació a <a href="https://sansec.io/research/php2shell" rel="noopener">Sansec</a> i <a href="https://www.huntress.com/blog/php2shell-leaked-critical-php-vulnerabilities" rel="noopener">Huntress</a>.</p>
+                        <div class="actions">
+                            <button type="button" onclick="location.reload()">Torna-ho a provar</button>
+                            <p class="countdown">Reintentant en <span id="seconds">30</span>s</p>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </main>
+        <script>
+            (function () {
+                var seconds = 30;
+                var output = document.getElementById('seconds');
+
+                setInterval(function () {
+                    seconds -= 1;
+
+                    if (seconds <= 0) {
+                        location.reload();
+
+                        return;
+                    }
+
+                    output.textContent = seconds;
+                }, 1000);
+            })();
+        </script>
+    </body>
+</html>
